@@ -645,7 +645,10 @@ int openat_impl(int dirfd, const char* pathname, int flags, mode_t mode) {
   if (!orig_openat)
     orig_openat = (orig_openat_t)dlsym(RTLD_NEXT, "openat");
   int fd = funcs.open(dirfd, pathname, flags, mode, orig_openat);
-  open_fd(fd, pathname);
+  if (fd != -1)
+  {
+    open_fd(fd, pathname);
+  }
   return fd;
 }
 
